@@ -1,0 +1,7 @@
+.main_container {
+    background-image: url('../assets/background.png');
+    background-repeat: repeat;
+    padding: 3rem 1rem 3rem 1rem;
+
+    min-height: 50vh;
+}
