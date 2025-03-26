@@ -7,13 +7,12 @@ use Illuminate\View\View;
 Route::get('/', fn (): View => view('home'));
 Route::get('/home', fn (): View => view('home'));
 
-Route::get('/dashboard', fn (): View => view('dashboard'));
-
+Route::get('/dashboard', fn (): View => view('dashboard.dashboard'));
 
 Route::get(
     '/tasks', 
     [TaskController::class, 'findAll']
-);
+)->name('tasks');
 
 Route::get(
     '/tasks/{id}',
