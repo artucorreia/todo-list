@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', length: 50);
             $table->string('description', length: 255)->nullable();
             $table->boolean('deleted')->default(false);
+            $table->boolean('finished')->default(false);
             // $table->foreignId('user_id')->constrained('users');
             $table->foreignId('priority_id')->constrained('priorities');
             $table->timestamps();

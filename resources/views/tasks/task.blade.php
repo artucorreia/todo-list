@@ -6,6 +6,6 @@
 
 @section('content')
 <main class="main_container">
-    Tela de task id: {{ $id }}
+    {{ $task }}
 </main>
 @endsection

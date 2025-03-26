@@ -1,0 +1,77 @@
+@import url('variables.css');
+
+.main_container {
+    background-image: url('../assets/background.png');
+    background-repeat: repeat;
+    padding: 3rem 1rem 3rem 1rem;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-family: 'Roboto Mono', 'Courier New', Courier, monospace;
+    padding-bottom: 1rem;
+    font-size: 2rem;
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.container {
+    max-width: 100%;
+    overflow-x: auto;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.thead {
+    background-color: var(--primary-color);
+    position: sticky;
+    top: -1px;
+    color: #fff;
+}
+
+.thead th {
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.tbody td {
+    padding: 12px 15px;
+    font-size: 1rem;
+    color: var(--font-color);
+    border-bottom: 1px solid #ddd;
+}
+
+.task_name {
+    font-weight: 500;
+    color: var(--dark-color);
+}
+
+.tbody .task_id, .task_date, .task_finished {
+    text-align: center;
+}
+
+.tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.tbody td:empty {
+    color: #999;
+    font-style: italic;
+}

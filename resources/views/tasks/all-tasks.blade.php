@@ -4,62 +4,65 @@
 
 @section('content')
 
-<link rel="stylesheet" href="/css/data-tables.css">
-
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
-
-<!-- DataTables jQuery -->
-<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.1.js"></script>
-
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+<link rel="stylesheet" href="/css/all-tasks.css">
 
 <main class="main_container">
     <h1 class="title">My Tasks</h1>
+    @if (count($data) != 0)
     <div class="container">
-        <table id="tasks" class="display">
-            <thead>
+        <table class="table">
+            <thead class="thead">
                 <tr>
                     <th>ID</th>
-                    <th>Nome</th>
-                    <th>Criado em</th>
-                    <th>Atualizado em</th>
+                    <th>Name</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th></th>
                 </tr>
             </thead>
-            <tbody> </tbody>
+            <tbody class="tbody">
+                @foreach ($data as $task)
+                <tr onclick="window.location='{{ route('findTask', ['id' => $task->id]) }}'" >
+                    <td class="task_id">
+                        {{ $task->id }}
+                    </td>
+                    <td class="task_name">
+                        {{ $task->name }}
+                    </td>
+                    <td class="task_date">
+                        @if ($task->created_at == null)
+                            ---
+                        @else
+                        {{ date('G:i:s d/m/Y', strtotime($task->created_at)) }}
+                        @endif
+                    </td>
+                    <td class="task_date">
+                        @if (!$task->updated_at)
+                            ---
+                        @else
+                            {{ date('G:i:s d/m/Y', strtotime($task->updated_at)) }}
+                        @endif
+                    </td>
+                    <td class="task_finished">
+                        @if ($task->finished)
+                        <span>
+                            &#9989;
+                        </span>
+                        @else
+                        <span>
+                            &#10060;
+                        </span>
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
-</main>
+    @else
+    <div>Nothing to see here... &#128533;</div>
+    @endif
 
-<script>
-$(document).ready(function() {
-    let table = new DataTable('#tasks', {
-        processing: true,
-        serverSide: true,
-        ajax: '{{ route("tasks") }}',
-        columns: [
-            { data: 'id' },
-            { data: 'name' },
-            { data: 'created_at' },
-            { data: 'updated_at' }
-        ],
-        language: {
-            processing: 'Carregando...',
-            search: 'Pesquisar:',
-            lengthMenu: 'Exibir _MENU_ registros por página',
-            info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-            infoEmpty: 'Mostrando 0 a 0 de 0 registros',
-            infoFiltered: '(filtrado de _MAX_ registros no total)',
-            paginate: {
-                first: 'Primeira',
-                previous: 'Anterior',
-                next: 'Próxima',
-                last: 'Última'
-            }
-        }
-    });
-});
-</script>
+</main>
 
 @endsection
