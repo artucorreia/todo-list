@@ -9,15 +9,24 @@ use Illuminate\View\View;
 
 class TaskController extends Controller
 {
-    public function findAll(): View
+    public function index(): View
     {
-        $tasks = Task::orderBy("id","asc")->get();
-        return view('tasks.all-tasks', ['data' => $tasks]);
+        $search = request('search');
+
+        $tasks = $search ? 
+            Task::where([
+                ["name", 'like', "%$search%"]
+            ])->get()
+        :
+            Task::orderBy("id","asc")->get()
+        ;
+
+        return view('tasks.index', ['tasks' => $tasks]);
     }
 
-    public function findById($id): View
+    public function show($id): View
     {
-        $task = Task::find($id);
+        $task = Task::findOrFail($id);
         return view('tasks.task', ['task' => $task]);
     }
 
@@ -36,11 +45,20 @@ class TaskController extends Controller
         $task->priority_id = $priority->id;
         $task->save();
 
-        return redirect('/');
+        return redirect('/')->with("msg", "Task created succesfully");
     }
 
-    public function deleteById()
+    public function finishTask($id) 
     {
+        
+    // $task = Task::findOrFail($id);
+    // $task->finished = true;
+    // Task::update($task);
+    }
 
+    public function destroy($id)
+    {
+        Task::findOrFail($id)->delete();
+        return redirect('/')->with("msg", "Task deleted succesfully");
     }
 }

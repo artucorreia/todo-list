@@ -66,6 +66,36 @@ body {
 }
 
 
+/* Msg Style */
+.msg {
+    background: #1aca4563;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.6px);
+    -webkit-backdrop-filter: blur(5.6px);
+    border: 1px solid rgb(67, 202, 100);
+
+    color: #15bf3fc9;
+    
+    border-radius: .7rem;
+    margin-top: 1.2rem;
+    padding: 1rem 0.6rem;
+    max-width: 15rem;
+    
+    position: absolute;
+    right: 1rem;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    cursor: pointer;
+}
+
+.msg_icon {
+    padding-bottom: .5rem;
+}
+
 /* Footer Style */
 
 .footer_container {

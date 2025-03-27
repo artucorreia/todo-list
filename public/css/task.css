@@ -1,0 +1,108 @@
+@import url('variables.css');
+
+* {
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
+
+.container {
+    background-image: url('../assets/background.png');
+    padding: 5rem 0;
+}
+
+.title {
+    font-family: 'Roboto Mono', 'Courier New', Courier, monospace;
+    text-align: center;
+    padding-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.card {
+    margin: auto;
+    max-width: 30rem;
+    min-height: 15rem;
+    display: flex;
+}
+
+.card-body {
+    padding: 1.5rem;
+    background-color: var(--primary-color);
+    border-radius: 1rem;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 60vw;
+    margin: auto;
+}
+
+.card-data {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: 1.5rem 0.75rem 1.5rem 0.75rem;
+    background-color: #fff;
+    color: #000;
+}
+
+.label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.value {
+    font-size: 1.1rem;
+    word-wrap: break-word;
+}
+
+.card-dates {
+    padding-top: 1rem;
+}
+
+.date {
+    padding-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #ffffffc5;
+}
+
+.btn_container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 1.5rem;
+    height: 13rem;
+}
+
+.btn {
+    border: none;
+    outline: none;
+    border-radius: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.btn_finish{
+    background-color: #22bb33;
+    transition-duration: .3s;
+}
+.btn_finish:hover {
+    background-color: #18aa29;
+}
+
+.btn_update{
+    background-color: #f0ad4e;
+    transition-duration: .3s;
+}
+.btn_update:hover {
+    background-color: #e29d3c;
+}
+
+.btn_delete{
+    background-color: #bb2124;
+    transition-duration: .3s;
+}
+.btn_delete:hover {
+    background-color: #9b1618;
+}
