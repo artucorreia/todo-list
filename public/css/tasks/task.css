@@ -1,11 +1,11 @@
-@import url('variables.css');
+@import url('../variables.css');
 
 * {
     font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
 .container {
-    background-image: url('../assets/background.png');
+    background-image: url('../../assets/background.png');
     padding: 5rem 0;
 }
 

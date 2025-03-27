@@ -14,14 +14,12 @@ class TaskController extends Controller
         $search = request('search');
 
         $tasks = $search ? 
-            Task::where([
-                ["name", 'like', "%$search%"]
-            ])->get()
+            Task::whereLike("name", "%{$search}%")->get()
         :
             Task::orderBy("id","asc")->get()
         ;
 
-        return view('tasks.index', ['tasks' => $tasks]);
+        return view('tasks.index', ['tasks' => $tasks, 'search' => $search]);
     }
 
     public function show($id): View
@@ -45,20 +43,43 @@ class TaskController extends Controller
         $task->priority_id = $priority->id;
         $task->save();
 
-        return redirect('/')->with("msg", "Task created succesfully");
+        return redirect('/tasks')->with('msg', 'Task created succesfully');
     }
 
-    public function finishTask($id) 
+    public function edit($id): View
     {
+        $task = Task::findOrFail($id);
+        $priorities = Priority::all();
+        return view('tasks.edit',['task' => $task, 'priorities' => $priorities]);
+    }
+
+    public function update(Request $request) 
+    {
+        $task = Task::findOrFail($request->id);
+        $task->name = $request->name;
+        $task->description = $request->description;
+        if($request->priority) {
+            $priority = json_decode($request->priority);
+            $task->priority_id = $priority->id;
+        }
         
-    // $task = Task::findOrFail($id);
-    // $task->finished = true;
-    // Task::update($task);
+        if (!$task->isDirty()) return redirect('/tasks');
+
+        $task->save();
+        return redirect('/tasks')->with('msg', 'Task updated succesfully');
+    }
+
+    public function markAsFinished($id)
+    {
+        $task = Task::findOrFail($id);
+        $task->finished = true;
+        $task->save();
+        return redirect('/tasks')->with('msg', 'Task mark as finished succesfully');
     }
 
     public function destroy($id)
     {
         Task::findOrFail($id)->delete();
-        return redirect('/')->with("msg", "Task deleted succesfully");
+        return redirect('/tasks')->with("msg", "Task deleted succesfully");
     }
 }

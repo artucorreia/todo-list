@@ -15,8 +15,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
     <!-- App style -->
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/main.css">
 
+    <!-- Animations -->
     <link rel="stylesheet" href="/css/animations/animation.css">
 
 </head>
@@ -24,13 +25,13 @@
     <header class="header_container">
         <div class="logo_container">
             <img src="/assets/logo.jpg" alt="governo de alagoas" class="logo_image">
-            <a href="/" target="_self" class="logo">
+            <a href="/tasks" target="_self" class="logo">
                 Tasks AL
             </a>
         </div>
         <div class="options_container">
-            <a href="/home" target="_self" class="page_link">home</a>
-            <a href="/create" target="_self" class="page_link">create</a>
+            <a href="{{ route('index') }}" target="_self" class="page_link">home</a>
+            <a href="{{ route('createPage') }}" target="_self" class="page_link">create</a>
         </div>
     </header>
     <main>
