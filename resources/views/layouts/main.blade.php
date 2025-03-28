@@ -32,6 +32,11 @@
         <div class="options_container">
             <a href="{{ route('index') }}" target="_self" class="page_link">home</a>
             <a href="{{ route('createPage') }}" target="_self" class="page_link">create</a>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                @method('POST')
+                <button class="page_link">logout</button>
+            </form>
         </div>
     </header>
     <main>
