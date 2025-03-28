@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Priority;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class TaskController extends Controller
@@ -13,10 +14,19 @@ class TaskController extends Controller
     {
         $search = request('search');
 
-        $tasks = $search ? 
-            Task::whereLike("name", "%{$search}%")->get()
+        $tasks = $search ?
+            DB::table('tasks')
+            ->join('priorities', 'tasks.priority_id', '=', 'priorities.id')
+            ->whereLike('tasks.name', "%$search%")
+            ->select('tasks.*', 'priorities.name AS priorityName')
+            ->orderBy("finished", "asc")
+            ->get()
         :
-            Task::orderBy("id","asc")->get()
+            DB::table('tasks')
+            ->join("priorities", 'tasks.priority_id', '=', 'priorities.id')
+            ->select('tasks.*', 'priorities.name AS priorityName')
+            ->orderBy("finished", "asc")
+            ->get();
         ;
 
         return view('tasks.index', ['tasks' => $tasks, 'search' => $search]);
@@ -24,7 +34,12 @@ class TaskController extends Controller
 
     public function show($id): View
     {
-        $task = Task::findOrFail($id);
+        $task = DB::table('tasks')
+            ->join('priorities', 'tasks.priority_id', '=', 'priorities.id')
+            ->where('tasks.id', "=", $id)
+            ->select('tasks.*', 'priorities.name AS priorityName')
+            ->firstOrFail();
+
         return view('tasks.task', ['task' => $task]);
     }
 
@@ -43,7 +58,7 @@ class TaskController extends Controller
         $task->priority_id = $priority->id;
         $task->save();
 
-        return redirect('/tasks')->with('msg', 'Task created succesfully');
+        return redirect('/tasks')->with('success', 'Task created succesfully');
     }
 
     public function edit($id): View
@@ -66,20 +81,21 @@ class TaskController extends Controller
         if (!$task->isDirty()) return redirect('/tasks');
 
         $task->save();
-        return redirect('/tasks')->with('msg', 'Task updated succesfully');
+        return redirect('/tasks')->with('success', 'Task updated succesfully');
     }
 
     public function markAsFinished($id)
     {
-        $task = Task::findOrFail($id);
-        $task->finished = true;
-        $task->save();
-        return redirect('/tasks')->with('msg', 'Task mark as finished succesfully');
+        $affected = DB::table('tasks')
+            ->where('id', $id)
+            ->update(['finished' => true]);
+        if($affected === 0) return redirect('/tasks')->with('error', 'No task found with the given id');
+        return redirect('/tasks')->with('success', 'Task mark as finished succesfully');
     }
 
     public function destroy($id)
     {
         Task::findOrFail($id)->delete();
-        return redirect('/tasks')->with("msg", "Task deleted succesfully");
+        return redirect('/tasks')->with("success", "Task deleted succesfully");
     }
 }
