@@ -7,6 +7,7 @@ use Illuminate\View\View;
 Route::get('/dashboard', fn (): View => view('dashboard.dashboard'))->name('dashboardPage');
 Route::get('/', [TaskController::class, 'index'])->name('index');
 
+
 Route::prefix('tasks')->group(function () 
 {
     Route::get('/', [TaskController::class, 'index'])->name('index');

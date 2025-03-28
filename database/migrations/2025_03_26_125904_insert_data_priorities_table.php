@@ -11,7 +11,7 @@ return new class extends Migration
     public function up(): void
     {
         DB::table("priorities")->insert([
-        ["name" => "HIGH"], ["name" => "MEDIUM"], ["name" => "LOW"]
+            ["name" => "HIGH"], ["name" => "MEDIUM"], ["name" => "LOW"]
         ]);
     }
 

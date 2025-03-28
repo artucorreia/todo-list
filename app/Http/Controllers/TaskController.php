@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Priority;
 use App\Models\Task;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -32,7 +32,7 @@ class TaskController extends Controller
         return view('tasks.index', ['tasks' => $tasks, 'search' => $search]);
     }
 
-    public function show($id): View
+    public function show(int $id): View
     {
         $task = DB::table('tasks')
             ->join('priorities', 'tasks.priority_id', '=', 'priorities.id')
@@ -45,46 +45,77 @@ class TaskController extends Controller
 
     public function create(): View
     {
-        $priorities = Priority::orderBy('id','asc')->get();
+        $priorities = DB::table('priorities')
+            ->orderBy('id', 'asc')
+            ->select('priorities.name', 'priorities.id')
+            ->get();
         return view('tasks.create', ['priorities' => $priorities]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
+        $validator = $request->validate([
+            'name' => ['required', 'max:50', 'min:5'],
+            'description' => ['nullable', 'min:1', 'max:255'],
+            'priority' => ['required']
+        ]);
+    
         $task = new Task();
-        $task->name = $request->name;
-        $task->description = $request->description;
-        $priority = json_decode($request->priority);
-        $task->priority_id = $priority->id;
+        $task->name = trim($validator['name']);
+        $task->description = trim($validator['description'] ?? '');
+        $task->priority_id = $validator['priority'];
         $task->save();
 
         return redirect('/tasks')->with('success', 'Task created succesfully');
     }
 
-    public function edit($id): View
+    public function edit(int $id): View
     {
-        $task = Task::findOrFail($id);
-        $priorities = Priority::all();
+        $task = DB::table('tasks')
+            ->where('id', $id)
+            ->firstOrFail();
+        $priorities = DB::table('priorities')
+            ->select('priorities.name', 'priorities.id')
+            ->get();
         return view('tasks.edit',['task' => $task, 'priorities' => $priorities]);
     }
 
-    public function update(Request $request) 
+    public function update(Request $request): RedirectResponse 
     {
+        $validator = $request->validate([
+            'name' => ['nullable', 'max:50', 'min:5'],
+            'description' => ['nullable', 'min:1', 'max:255']
+        ]);
+
         $task = Task::findOrFail($request->id);
-        $task->name = $request->name;
-        $task->description = $request->description;
-        if($request->priority) {
-            $priority = json_decode($request->priority);
-            $task->priority_id = $priority->id;
+
+        if (
+            $task->name != $validator['name'] 
+            && isset($validator['name'])
+        ) {
+            $task->name = $validator['name'];
+        } 
+
+        if (
+            $task->description != $validator['description'] 
+            && isset($validator['description'])
+        ) {
+            $task->description = $validator['description'];
+        }
+
+        if (
+            $task->priority_id != $request->priority 
+            && isset($request->priority)
+        ) { 
+            $task->priority_id = $request->priority; 
         }
         
-        if (!$task->isDirty()) return redirect('/tasks');
-
         $task->save();
+
         return redirect('/tasks')->with('success', 'Task updated succesfully');
     }
 
-    public function markAsFinished($id)
+    public function markAsFinished(int $id): RedirectResponse
     {
         $affected = DB::table('tasks')
             ->where('id', $id)
@@ -93,9 +124,9 @@ class TaskController extends Controller
         return redirect('/tasks')->with('success', 'Task mark as finished succesfully');
     }
 
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
-        Task::findOrFail($id)->delete();
+        DB::table('tasks')->where('id', $id)->delete();
         return redirect('/tasks')->with("success", "Task deleted succesfully");
     }
 }

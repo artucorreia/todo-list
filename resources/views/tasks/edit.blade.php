@@ -31,9 +31,9 @@
                 <select name="priority" id="priority" class="form_priority" required>
                     @foreach ($priorities as $priority)
                         @if ($task->priority_id == $priority->id)
-                        <option value="{{ $priority }}" disabled selected>{{ $priority->name }}</option>
+                        <option value="{{ $priority->id }}" disabled selected>{{ $priority->name }}</option>
                         @else
-                        <option value="{{ $priority }}">{{ $priority->name }}</option>
+                        <option value="{{ $priority->id }}">{{ $priority->name }}</option>
                         @endif
                     @endforeach
                 </select>
