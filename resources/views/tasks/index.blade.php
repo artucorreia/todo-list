@@ -67,13 +67,9 @@
                     </td>
                     <td class="task_finished">
                         @if ($task->finished)
-                        <span>
-                            &#9989;
-                        </span>
+                        <x-carbon-checkbox-checked />
                         @else
-                        <span>
-                            &#10060;
-                        </span>
+                        <x-carbon-checkbox />
                         @endif
                     </td>
                 </tr>
@@ -85,16 +81,12 @@
         @if ($search)
         <div>No task found for your search... &#128533;</div>
         <a href="{{ route('tasks.index') }}" class="btn_back_container">
-            <button class="btn">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff"><path d="M280-200v-80h284q63 0 109.5-40T720-420q0-60-46.5-100T564-560H312l104 104-56 56-200-200 200-200 56 56-104 104h252q97 0 166.5 63T800-420q0 94-69.5 157T564-200H280Z"/></svg>
-            </button>
+            <button class="btn"><x-carbon-arrow-left /></button>
         </a>
         @else
         <div>You have no tasks... &#128533;</div>
         <a href="{{ route('tasks.create') }}" class="btn_back_container">
-            <button class="btn">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
-            </button>
+            <button class="btn"><x-carbon-add /></button>
         </a>
         @endif
     @endif

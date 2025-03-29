@@ -18,9 +18,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
-    <!-- Animations -->
-    <link rel="stylesheet" href="/css/animations/animation.css">
-
 </head>
 <body class="font-[Roboto] text-gray-800">
     <header class="flex px-5 py-3 shadow-xl">
@@ -31,41 +28,11 @@
             </a>
         </div>
         <div class="flex-auto flex justify-end items-center">
-            <a href="{{ route('tasks.index') }}" target="_self" class="pr-3 font-semibold uppercase hover:text-blue-600 duration-200">home</a>
-            <a href="{{ route('tasks.create') }}" target="_self" class="pr-3 font-semibold uppercase hover:text-blue-600 duration-200">create</a>
-            <form action="{{ route('logout') }}" method="POST" class="font-semibold">
-                @csrf
-                @method('POST')
-                <button class=" uppercase hover:text-blue-600 hover:cursor-pointer duration-200">logout</button>
-            </form>
+            <a href="{{ route('show.login') }}" target="_self" class="pr-3 font-semibold uppercase hover:text-blue-600 duration-200">login</a>
+            <a href="{{ route('show.register') }}" target="_self" class="pr-3 font-semibold uppercase hover:text-blue-600 duration-200">register</a>
         </div>
     </header>
     <main>
-        <!-- Success message -->
-        @if (session("success"))
-            <div 
-            class="
-                absolute 
-                right-2 
-                mt-3 
-                text-center 
-                w-60 
-                p-1 
-                bg-green-400 
-                opacity-70 
-                border-green-700 
-                border-1 
-                text-green-700 
-                rounded-lg
-                fadeInRight
-                hover:cursor-pointer">
-                <x-carbon-checkmark-outline class="size-6 mx-auto mb-3"/>
-                <span>
-                    {{ session('success') }}
-                </span>
-            </div>
-        @endif
-
         <!-- Error message -->
         @if ($errors->any())
             <div 
