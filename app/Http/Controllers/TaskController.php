@@ -14,20 +14,18 @@ class TaskController extends Controller
     {
         $search = request('search');
 
-        $tasks = $search ?
-            DB::table('tasks')
-            ->join('priorities', 'tasks.priority_id', '=', 'priorities.id')
-            ->whereLike('tasks.name', "%$search%")
-            ->select('tasks.*', 'priorities.name AS priorityName')
-            ->orderBy("finished", "asc")
-            ->get()
-        :
-            DB::table('tasks')
-            ->join("priorities", 'tasks.priority_id', '=', 'priorities.id')
-            ->select('tasks.*', 'priorities.name AS priorityName')
-            ->orderBy("finished", "asc")
-            ->get();
-        ;
+        $tasks = $search
+            ? DB::table('tasks')
+                ->join('priorities', 'tasks.priority_id', '=', 'priorities.id')
+                ->whereLike('tasks.name', "%$search%")
+                ->select('tasks.*', 'priorities.name AS priorityName')
+                ->orderBy('finished', 'asc')
+                ->get()
+            : DB::table('tasks')
+                ->join('priorities', 'tasks.priority_id', '=', 'priorities.id')
+                ->select('tasks.*', 'priorities.name AS priorityName')
+                ->orderBy('finished', 'asc')
+                ->get();
 
         return view('tasks.index', ['tasks' => $tasks, 'search' => $search]);
     }
@@ -36,11 +34,11 @@ class TaskController extends Controller
     {
         $task = DB::table('tasks')
             ->join('priorities', 'tasks.priority_id', '=', 'priorities.id')
-            ->where('tasks.id', "=", $id)
+            ->where('tasks.id', '=', $id)
             ->select('tasks.*', 'priorities.name AS priorityName')
             ->firstOrFail();
 
-        return view('tasks.task', ['task' => $task]);
+        return view('tasks.show', ['task' => $task]);
     }
 
     public function create(): View
@@ -57,62 +55,64 @@ class TaskController extends Controller
         $validator = $request->validate([
             'name' => ['required', 'max:50', 'min:5'],
             'description' => ['nullable', 'min:1', 'max:255'],
-            'priority' => ['required']
+            'priority' => ['required'],
         ]);
-    
+
         $task = new Task();
         $task->name = trim($validator['name']);
         $task->description = trim($validator['description'] ?? '');
         $task->priority_id = $validator['priority'];
         $task->save();
 
-        return redirect('/tasks')->with('success', 'Task created succesfully');
+        return redirect()
+            ->route('tasks.index')
+            ->with('success', 'Task created succesfully');
     }
 
     public function edit(int $id): View
     {
-        $task = DB::table('tasks')
-            ->where('id', $id)
-            ->firstOrFail();
+        $task = DB::table('tasks')->where('id', $id)->firstOrFail();
         $priorities = DB::table('priorities')
             ->select('priorities.name', 'priorities.id')
             ->get();
-        return view('tasks.edit',['task' => $task, 'priorities' => $priorities]);
+        return view('tasks.edit', [
+            'task' => $task,
+            'priorities' => $priorities,
+        ]);
     }
 
-    public function update(Request $request): RedirectResponse 
+    public function update(Request $request): RedirectResponse
     {
         $validator = $request->validate([
             'name' => ['nullable', 'max:50', 'min:5'],
-            'description' => ['nullable', 'min:1', 'max:255']
+            'description' => ['nullable', 'min:1', 'max:255'],
         ]);
 
         $task = Task::findOrFail($request->id);
 
-        if (
-            $task->name != $validator['name'] 
-            && isset($validator['name'])
-        ) {
+        if ($task->name != $validator['name'] && isset($validator['name'])) {
             $task->name = $validator['name'];
-        } 
+        }
 
         if (
-            $task->description != $validator['description'] 
-            && isset($validator['description'])
+            $task->description != $validator['description'] &&
+            isset($validator['description'])
         ) {
             $task->description = $validator['description'];
         }
 
         if (
-            $task->priority_id != $request->priority 
-            && isset($request->priority)
-        ) { 
-            $task->priority_id = $request->priority; 
+            $task->priority_id != $request->priority &&
+            isset($request->priority)
+        ) {
+            $task->priority_id = $request->priority;
         }
-        
+
         $task->save();
 
-        return redirect('/tasks')->with('success', 'Task updated succesfully');
+        return redirect()
+            ->route('tasks.index')
+            ->with('success', 'Task updated succesfully');
     }
 
     public function markAsFinished(int $id): RedirectResponse
@@ -120,13 +120,18 @@ class TaskController extends Controller
         $affected = DB::table('tasks')
             ->where('id', $id)
             ->update(['finished' => true]);
-        if($affected === 0) return redirect('/tasks')->with('error', 'No task found with the given id');
-        return redirect('/tasks')->with('success', 'Task mark as finished succesfully');
+        // if($affected === 0) throw NotFound::withMessages('rew');
+        // return redirect()->route('index')->with('error', 'No task found with the given id');
+        return redirect()
+            ->route('tasks.index')
+            ->with('success', 'Task mark as finished succesfully');
     }
 
     public function destroy(int $id): RedirectResponse
     {
         DB::table('tasks')->where('id', $id)->delete();
-        return redirect('/tasks')->with("success", "Task deleted succesfully");
+        return redirect()
+            ->route('tasks.index')
+            ->with('success', 'Task deleted succesfully');
     }
 }

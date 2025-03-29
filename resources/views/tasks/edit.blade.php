@@ -13,7 +13,7 @@
 <main class="main_container">
     <h1 class="title">Edit Your Task</h1>
     <div class="container pulse">    
-        <form action="{{ route('update', $task->id) }}" method="post" class="form">
+        <form action="{{ route('tasks.update', $task->id) }}" method="post" class="form">
             @csrf
             @method('PUT')
             <div class="form-group">

@@ -25,13 +25,13 @@
     <header class="header_container">
         <div class="logo_container">
             <img src="/assets/logo.jpg" alt="governo de alagoas" class="logo_image">
-            <a href="/tasks" target="_self" class="logo">
+            <a href="{{ route('tasks.index') }}" target="_self" class="logo">
                 Tasks AL
             </a>
         </div>
         <div class="options_container">
-            <a href="{{ route('index') }}" target="_self" class="page_link">home</a>
-            <a href="{{ route('createPage') }}" target="_self" class="page_link">create</a>
+            <a href="{{ route('tasks.index') }}" target="_self" class="page_link">home</a>
+            <a href="{{ route('tasks.create') }}" target="_self" class="page_link">create</a>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
                 @method('POST')

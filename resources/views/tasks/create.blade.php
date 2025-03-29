@@ -14,7 +14,7 @@
 <main class="main_container">
     <h1 class="title">Create New Task</h1>
     <div class="container pulse">    
-        <form action="{{ route('store') }}" method="post" class="form">
+        <form action="{{ route('tasks.store') }}" method="post" class="form">
             @csrf
             <div class="form-group">
                 <label for="name" class="label">Name</label>
