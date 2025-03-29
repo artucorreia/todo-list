@@ -3,94 +3,92 @@
 @section('title', 'Tasks')
 
 @section('content')
+    <div class="bg-[url(../../../public/assets/background.png)]">
+        <div class="w-260 mx-auto py-20 min-h-150">
+            <h1 class="text-3xl font-semibold font-[Roboto_Mono] pb-3 text-center">My Tasks</h1>
+            <x-bladewind::table :data="$tasks" layout="custom" has_header="true" has_border="true"
+                message_as_empty_state="true" divider="thin">
 
-<link rel="stylesheet" href="/css/tasks/index.css">
+                <x-slot:header>
+                    <thead class="sticky top-[-1px] cursor-default">
+                        <th class="!text-center">#</th>
+                        <th class="!text-center">Name</th>
+                        <th class="!text-center">Priority</th>
+                        <th class="!text-center">Created At</th>
+                        <th class="!text-center">Updated At</th>
+                        <th class="!text-center">Finished</th>
+                        <th class="!text-center">Actions</th>
+                    </thead>
+                </x-slot:header>
 
-<main class="main_container">
-    <h1 class="title">My Tasks</h1>
-    @if (count($tasks) != 0)
-    <div class="container">
-        <table class="table">
-            <caption class="caption">
-                <div class="search_container">
-                    <div class="search_card">
-                        <form action="{{ route('tasks.index') }}" method="get">
-                            <input type="text" class="search_input" name="search" maxlength="50" value="{{ $search }}">
-                        </form>
-                        <i class="search_icon">
-                            @if ($search)
-                            <a href="{{ route('tasks.index') }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#333"><path d="m456-320 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Zm-96 160q-19 0-36-8.5T296-192L80-480l216-288q11-15 28-23.5t36-8.5h440q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H360ZM180-480l180 240h440v-480H360L180-480Zm400 0Z"/></svg>
-                            </a>
-                            @else
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#333"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
-                            @endif
-                        </i>
+                <tbody class="cursor-default">
+                    @foreach ($tasks as $task)
+                        <tr>
+                            <td class="!text-center">{{ $loop->iteration }}</td>
+                            <td class="!text-center font-semibold">{{ $task->name }}</td>
+                            <td class="!text-center font-semibold">{{ $task->priority_name }}</td>
+                            <td class="!text-center">
+                                {{ date('G:i:s d/m/Y', strtotime($task->created_at)) }}
+                            </td>
+                            <td class="!text-center">
+                                {{ date('G:i:s d/m/Y', strtotime($task->updated_at)) }}
+                            </td>
+                            <td>
+                                @if ($task->finished)
+                                    <x-carbon-checkbox-checked class="size-8 mx-auto text-black" />
+                                @else
+                                    <x-carbon-checkbox class="size-8 mx-auto  text-black" />
+                                @endif
+                            </td>
+                            <td class="flex justify-between">
+                                <a href="{{ route('tasks.show', $task->id) }}"
+                                    class="hover:cursor-pointer p-1 bg-blue-500 rounded-full">
+                                    <x-carbon-task-view class="size-5.5 text-white" />
+                                </a>
+                                @if (!$task->finished)
+                                    <form action="{{ route('tasks.finish', $task->id) }}" method="post">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="hover:cursor-pointer p-1 !bg-green-500 rounded-full">
+                                            <x-carbon-checkmark class="size-5.5 text-white" />
+                                        </button>
+                                    </form>
+                                @endif
+
+                                <form action="{{ route('tasks.destroy', $task->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="hover:cursor-pointer p-1 !bg-red-500 rounded-full">
+                                        <x-carbon-trash-can class="size-5.5 text-white" />
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+
+            </x-bladewind::table>
+            @if (count($tasks) === 0)
+                <div class="pt-2 flex flex-col items-center">
+                    <img src="/assets/task.png" alt="task" class="size-70">
+                    <div class="font-semibold text-xl pb-2">
+                        You have no task...
                     </div>
+                    <a href="{{ route('tasks.create') }}"
+                        class="
+                            !border-2 
+                            !border-green-500 
+                            rounded-md 
+                            !text-green-500 
+                            font-semibold 
+                            px-5 
+                            py-1 
+                        ">
+                        <button class="uppercase">create</button>
+                    </a>
                 </div>
-            </caption>
-            <thead class="thead">
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Priority</th>
-                    <th>Created At</th>
-                    <th>Updated At</th>
-                    <th>Finished</th>
-                </tr>
-            </thead>
-            <tbody class="tbody">
-                @foreach ($tasks as $task)
-                <tr onclick="window.location='{{ route('tasks.show', $task->id) }}'" >
-                    <td class="task_id">
-                        {{ $task->id }}
-                    </td>
-                    <td class="task_name">
-                        {{ $task->name }}
-                    </td>
-                    <td class="task_priority">
-                        {{ $task->priorityName }}
-                    </td>
-                    <td class="task_date">
-                        @if ($task->created_at == null)
-                            ---
-                        @else
-                        {{ date('G:i:s d/m/Y', strtotime($task->created_at)) }}
-                        @endif
-                    </td>
-                    <td class="task_date">
-                        @if (!$task->updated_at)
-                            ---
-                        @else
-                            {{ date('G:i:s d/m/Y', strtotime($task->updated_at)) }}
-                        @endif
-                    </td>
-                    <td class="task_finished">
-                        @if ($task->finished)
-                        <x-carbon-checkbox-checked />
-                        @else
-                        <x-carbon-checkbox />
-                        @endif
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+            @endif
+        </div>
     </div>
-    @else
-        @if ($search)
-        <div>No task found for your search... &#128533;</div>
-        <a href="{{ route('tasks.index') }}" class="btn_back_container">
-            <button class="btn"><x-carbon-arrow-left /></button>
-        </a>
-        @else
-        <div>You have no tasks... &#128533;</div>
-        <a href="{{ route('tasks.create') }}" class="btn_back_container">
-            <button class="btn"><x-carbon-add /></button>
-        </a>
-        @endif
-    @endif
-
-</main>
 
 @endsection
