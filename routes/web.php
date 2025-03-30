@@ -1,13 +1,14 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 
 // Auth
 Route::get('/register', [AuthController::class, 'showRegister'])->name(
-    'show.register'
+    'show.register',
 );
 Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
@@ -29,6 +30,8 @@ Route::middleware('auth')
     });
 
 // Dashboard
-Route::get('/dashboard', fn(): View => view('dashboard.dashboard'))->name(
-    'show.dashboard'
-);
+Route::middleware('auth')
+    ->controller(DashboardController::class)
+    ->group(function () {
+        Route::get('/dashboard', 'index')->name('dashboard.index');
+    });
