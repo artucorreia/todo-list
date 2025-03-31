@@ -117,8 +117,8 @@
                 text-center 
                 w-60 
                 p-1 
-                bg-green-400 
-                opacity-70 
+                bg-green-200 
+                opacity-40 
                 border-green-700 
                 border-1 
                 text-green-700 
@@ -142,7 +142,7 @@
                 text-center 
                 w-60 
                 p-1 
-                bg-red-400 
+                bg-red-300 
                 opacity-70 
                 border-red-600 
                 border-1 
