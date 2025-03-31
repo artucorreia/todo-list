@@ -3,11 +3,13 @@
 @section('title', 'Task')
 
 @section('content')
+    <!-- background image -->
+    <link rel="stylesheet" href="/css/background/bg.css">
 
     <!-- Animations -->
     <link rel="stylesheet" href="/css/animations/animation.css">
 
-    <div class="flex flex-col items-center bg-[url(../../../public/assets/background.png)] py-35">
+    <div class="flex flex-col items-center py-35 background_image">
         <h1 class="text-3xl font-normal font-[Roboto_Mono] pb-3">
             {{ $task->finished ? 'Completed Task' : 'Pending Task' }}
         </h1>

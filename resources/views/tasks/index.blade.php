@@ -3,7 +3,11 @@
 @section('title', 'Tasks')
 
 @section('content')
-    <div class="bg-[url(../../../public/assets/background.png)]">
+
+    <!-- background image -->
+    <link rel="stylesheet" href="/css/background/bg.css">
+
+    <div class="background_image">
         <div class="mx-auto py-20 min-h-150">
             <h1 class="text-3xl font-semibold font-[Roboto_Mono] pb-3 text-center">My Tasks</h1>
             <div class="overflow-auto max-w-400 mx-auto">
