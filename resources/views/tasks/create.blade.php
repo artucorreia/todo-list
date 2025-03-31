@@ -9,7 +9,7 @@
 
     <div class="bg-[url(../../../public/assets/background.png)] py-15 flex flex-col justify-center items-center">
         <h1 class="text-3xl font-semibold font-[Roboto_Mono] pb-3">Create New Task</h1>
-        <div class="bg-white pulse p-10 w-120 rounded-lg !drop-shadow-xl">
+        <div class="bg-white pulse p-10 w-120 rounded-lg !drop-shadow-xl max-md:w-full">
             <form action="{{ route('tasks.store') }}" method="post" class="flex flex-col text-lg">
                 @csrf
                 <div class="flex flex-col pb-5">
@@ -40,14 +40,14 @@
                 <button type="submit"
                     class="
                     !bg-emerald-600 
-                    !hover:bg-emerald-500 
                     hover:cursor-pointer 
                     rounded-md 
                     py-3 
                     text-white 
                     drop-shadow-xl
                     duration-300
-                    uppercase">
+                    uppercase
+                    ">
                     create
                 </button>
             </form>

@@ -41,7 +41,7 @@
 <body class="font-[Roboto] text-gray-800">
     <header class="flex px-5 py-3 shadow-xl">
         <div class="flex-auto flex justify-start items-center">
-            <img src="/assets/logo.jpg" alt="governo de alagoas" class="size-15 rounded-full">
+            <img src="/assets/logo.jpg" alt="governo de alagoas" class="size-15 rounded-full  max-md:size-12">
             <a href="{{ route('tasks.index') }}" target="_self" class="pl-2">
                 <h1 class="text-2xl font-semibold">Tasks AL</h1>
             </a>
@@ -162,9 +162,9 @@
         @yield('content')
     </main>
 
-    <footer class="px-40 !md:px-20 !md:bg-red-400 py-12 bg-black text-white">
-        <section class="flex justify-between">
-            <div class="w-3/5">
+    <footer class="px-40 py-12 bg-black text-white max-md:px-8">
+        <section class="flex justify-between max-md:flex-col max-md:gap-5">
+            <div class="w-3/5 max-md:w-full">
                 <h2 class="font-bold uppercase text-lg">arthur correia</h2>
                 <div class="text-sm">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae suscipit libero delectus pariatur id
@@ -174,7 +174,7 @@
             </div>
             <div>
                 <h2 class="font-bold uppercase text-lg">social</h2>
-                <div class="flex justify-between items-center">
+                <div class="flex justify-between items-center max-md:w-30">
                     <x-carbon-logo-x class="size-8 hover:cursor-pointer" />
                     <x-carbon-logo-linkedin class="size-8 hover:cursor-pointer" />
                     <x-carbon-logo-github class="size-8 hover:cursor-pointer" />

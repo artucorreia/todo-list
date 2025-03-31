@@ -4,9 +4,9 @@
 
 @section('content')
 
-    <div class="flex flex-col items-center justify-center min-h-180 bg-gray-100 px-4">
+    <div class="flex flex-col items-center justify-center min-h-180 bg-gray-100 px-4 max-md:px-0">
         <h1 class="text-3xl font-semibold text-gray-800 mb-6">Login</h1>
-        <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+        <div class="bg-white shadow-lg rounded-lg p-6 w-120 max-md:w-full max-md:bg-transparent max-md:shadow-none">
             <form method="POST" action="{{ route('login') }}" class="space-y-4">
                 @csrf
                 @method('POST')

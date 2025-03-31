@@ -9,7 +9,7 @@
 
     <div class="bg-[url(../../../public/assets/background.png)] py-15 flex flex-col justify-center items-center">
         <h1 class="text-3xl font-semibold font-[Roboto_Mono] pb-3">Edit Your Task</h1>
-        <div class="bg-white pulse p-10 w-120 rounded-lg drop-shadow-xl">
+        <div class="bg-white pulse p-10 w-120 rounded-lg drop-shadow-xl max-md:w-full">
             <form action="{{ route('tasks.update', $task->id) }}" method="post" class="flex flex-col text-lg">
                 @csrf
                 @method('PUT')

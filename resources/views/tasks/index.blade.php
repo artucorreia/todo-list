@@ -82,10 +82,13 @@
                             !border-2 
                             !border-green-500 
                             rounded-md 
-                            !text-green-500 
+                            text-green-500 
                             font-semibold 
                             px-5 
                             py-1 
+                            hover:bg-green-500
+                            hover:text-white
+                            duration-300
                         ">
                             <button class="uppercase">create</button>
                         </a>
