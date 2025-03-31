@@ -47,11 +47,8 @@
             </a>
         </div>
         <div class="flex-auto flex justify-end items-center">
-            <a href="{{ route('tasks.index') }}" target="_self" class="pr-3 font-semibold uppercase">home</a>
-            <a href="{{ route('tasks.create') }}" target="_self" class="pr-4 font-semibold uppercase">create</a>
             <div class="flex justify-center items-center">
                 <x-bladewind::dropmenu>
-
                     <x-slot:trigger>
                         <div class="flex space-x-1 items-center rounded-md">
                             <div class="grow">
@@ -69,6 +66,20 @@
                             <div class="text-sm">{{ Auth::user()->email }}</div>
                         </div>
                     </x-bladewind::dropmenu-item>
+
+                    <a href="{{ route('tasks.index') }}" target="_self">
+                        <x-bladewind::dropmenu-item icon="home">
+                            Home Page
+                        </x-bladewind::dropmenu-item>
+                    </a>
+                    <a href="{{ route('tasks.create') }}" target="_self">
+                        <x-bladewind::dropmenu-item icon="plus">
+                            Create Task
+                        </x-bladewind::dropmenu-item>
+                    </a>
+
+                    <x-bladewind::dropmenu-item divider />
+
                     <a href="{{ route('tasks.index') }}" target="_self">
                         <x-bladewind::dropmenu-item icon="pencil-square">
                             Edit Profile
@@ -151,7 +162,7 @@
         @yield('content')
     </main>
 
-    <footer class="px-40 py-12 bg-black text-white">
+    <footer class="px-40 !md:px-20 !md:bg-red-400 py-12 bg-black text-white">
         <section class="flex justify-between">
             <div class="w-3/5">
                 <h2 class="font-bold uppercase text-lg">arthur correia</h2>
