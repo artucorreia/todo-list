@@ -9,6 +9,11 @@
     <!-- Animations -->
     <link rel="stylesheet" href="/css/animations/animation.css">
 
+    <a href="{{ route('tasks.index') }}" title="Go back to home"
+        class="bg-blue-500 size-10 absolute mt-2 ml-2 rounded-full flex justify-center items-center hover:cursor-pointer">
+        <x-carbon-arrow-left class="size-7 text-white" />
+    </a>
+
     <div class="flex flex-col items-center py-35 background_image">
         <h1 class="text-3xl font-normal font-[Roboto_Mono] pb-3">
             {{ $task->finished ? 'Completed Task' : 'Pending Task' }}
@@ -52,26 +57,28 @@
                     <form action="{{ route('tasks.finish', $task->id) }}" method="post">
                         @csrf
                         @method('PUT')
-                        <button type="submit" class="!bg-emerald-500 p-2 rounded-full hover:cursor-pointer">
-                            <x-carbon-checkmark class="size-7 text-white" />
+                        <button type="submit" class="!bg-emerald-500 p-2 rounded-full hover:cursor-pointer"
+                            title="Mark the task as finished">
+                            <x-carbon-checkmark class="size-7 text-white" title="Mark the task as finished" />
                         </button>
                     </form>
 
                     <form action="{{ route('tasks.edit', $task->id) }}">
-                        <button class="!bg-amber-500 p-2 rounded-full hover:cursor-pointer">
-                            <x-carbon-edit class="size-7 text-white" />
+                        <button class="!bg-amber-500 p-2 rounded-full hover:cursor-pointer" title="Edit the task">
+                            <x-carbon-edit class="size-7 text-white" title="Edit the task" />
                         </button>
                     </form>
                 @endif
 
-                <form action="{{ route('tasks.destroy', $task->id) }}" method="post">
+                <form action="{{ route('tasks.destroy', $task->id) }}" method="post" title="Delete the task">
                     @csrf
                     @method('DELETE')
                     <button class="!bg-red-600 p-2 rounded-full hover:cursor-pointer">
-                        <x-carbon-trash-can class="size-7 text-white" />
+                        <x-carbon-trash-can class="size-7 text-white" title="Delete the task" />
                     </button>
                 </form>
             </div>
         </div>
     </div>
 @endsection
+

@@ -47,17 +47,18 @@
                                     @endif
                                 </td>
                                 <td class="flex justify-between min-w-40">
-                                    <a href="{{ route('tasks.show', $task->id) }}"
+                                    <a title="View the task" href="{{ route('tasks.show', $task->id) }}"
                                         class="hover:cursor-pointer p-1 bg-blue-500 rounded-full">
-                                        <x-carbon-task-view class="size-5.5 text-white" />
+                                        <x-carbon-task-view class="size-5.5 text-white" title="View the task" />
                                     </a>
                                     @if (!$task->finished)
                                         <form action="{{ route('tasks.finish', $task->id) }}" method="post">
                                             @csrf
                                             @method('PUT')
-                                            <button type="submit"
+                                            <button type="submit" title="Mark task as finished"
                                                 class="hover:cursor-pointer p-1 !bg-green-500 rounded-full">
-                                                <x-carbon-checkmark class="size-5.5 text-white" />
+                                                <x-carbon-checkmark class="size-5.5 text-white"
+                                                    title="Mark task as finished" />
                                             </button>
                                         </form>
                                     @endif
@@ -65,8 +66,9 @@
                                     <form action="{{ route('tasks.destroy', $task->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="hover:cursor-pointer p-1 !bg-red-500 rounded-full">
-                                            <x-carbon-trash-can class="size-5.5 text-white" />
+                                        <button class="hover:cursor-pointer p-1 !bg-red-500 rounded-full"
+                                            title="Delete the task">
+                                            <x-carbon-trash-can class="size-5.5 text-white" title="Delete the task" />
                                         </button>
                                     </form>
                                 </td>
@@ -104,3 +106,4 @@
     </div>
 
 @endsection
+
