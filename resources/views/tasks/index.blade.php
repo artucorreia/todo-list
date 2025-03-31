@@ -52,26 +52,18 @@
                                         <x-carbon-task-view class="size-5.5 text-white" title="View the task" />
                                     </a>
                                     @if (!$task->finished)
-                                        <form action="{{ route('tasks.finish', $task->id) }}" method="post">
-                                            @csrf
-                                            @method('PUT')
-                                            <button type="submit" title="Mark task as finished"
-                                                class="hover:cursor-pointer p-1 !bg-green-500 rounded-full">
-                                                <x-carbon-checkmark class="size-5.5 text-white"
-                                                    title="Mark task as finished" />
-                                            </button>
-                                        </form>
+                                        <button onclick="openModal('CHECK', '{{ route('tasks.finish', $task->id) }}')"
+                                            title="Mark task as finished"
+                                            class="hover:cursor-pointer p-1 !bg-green-500 rounded-full">
+                                            <x-carbon-checkmark class="size-5.5 text-white" title="Mark task as finished" />
+                                        </button>
                                     @endif
 
-                                    <form action="{{ route('tasks.destroy', $task->id) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="hover:cursor-pointer p-1 !bg-red-500 rounded-full"
-                                            title="Delete the task">
-                                            <x-carbon-trash-can class="size-5.5 text-white" title="Delete the task" />
-                                        </button>
-                                    </form>
+                                    <button onclick="openModal('DELETE', '{{ route('tasks.destroy', $task->id) }}')"
+                                        class="hover:cursor-pointer p-1 !bg-red-500 rounded-full" title="Delete the task">
+                                        <x-carbon-trash-can class="size-5.5 text-white" title="Delete the task" />
                                 </td>
+
                             </tr>
                         @endforeach
                     </tbody>
@@ -105,5 +97,40 @@
         </div>
     </div>
 
+    <!-- Modals -->
+    <form method="post" id="check-form">
+        @csrf
+        @method('PUT')
+        <x-bladewind::modal size="large" title="Check Confirmation" name="check-modal"
+            ok_button_action="this.closest('form').submit()">
+            Do you really want mark your task as finished?
+        </x-bladewind::modal>
+    </form>
+
+    <form method="post" id="delete-form">
+        @csrf
+        @method('DELETE')
+        <x-bladewind::modal size="large" title="Delete Confirmation" name="delete-modal"
+            ok_button_action="this.closest('form').submit()">
+            Do you really want to delete your task?
+        </x-bladewind::modal>
+    </form>
 @endsection
+
+<script>
+    const modalNames = {
+        CHECK: 'check-modal',
+        DELETE: 'delete-modal'
+    }
+
+    const formIds = {
+        CHECK: 'check-form',
+        DELETE: 'delete-form'
+    }
+
+    const openModal = (option, actionUrl) => {
+        document.getElementById(formIds[option]).action = actionUrl;
+        showModal(modalNames[option]);
+    }
+</script>
 

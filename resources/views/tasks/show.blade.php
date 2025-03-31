@@ -54,14 +54,10 @@
 
             <div class="flex justify-center gap-3">
                 @if (!$task->finished)
-                    <form action="{{ route('tasks.finish', $task->id) }}" method="post">
-                        @csrf
-                        @method('PUT')
-                        <button type="submit" class="!bg-emerald-500 p-2 rounded-full hover:cursor-pointer"
-                            title="Mark the task as finished">
-                            <x-carbon-checkmark class="size-7 text-white" title="Mark the task as finished" />
-                        </button>
-                    </form>
+                    <button onclick="showModal('check-modal')" class="!bg-emerald-500 p-2 rounded-full hover:cursor-pointer"
+                        title="Mark the task as finished">
+                        <x-carbon-checkmark class="size-7 text-white" title="Mark the task as finished" />
+                    </button>
 
                     <form action="{{ route('tasks.edit', $task->id) }}">
                         <button class="!bg-amber-500 p-2 rounded-full hover:cursor-pointer" title="Edit the task">
@@ -70,15 +66,31 @@
                     </form>
                 @endif
 
-                <form action="{{ route('tasks.destroy', $task->id) }}" method="post" title="Delete the task">
-                    @csrf
-                    @method('DELETE')
-                    <button class="!bg-red-600 p-2 rounded-full hover:cursor-pointer">
-                        <x-carbon-trash-can class="size-7 text-white" title="Delete the task" />
-                    </button>
-                </form>
+                <button onclick="showModal('delete-modal')" class="!bg-red-600 p-2 rounded-full hover:cursor-pointer">
+                    <x-carbon-trash-can class="size-7 text-white" title="Delete the task" />
+                </button>
+
             </div>
         </div>
     </div>
-@endsection
 
+    <!-- Modals -->
+    <form action="{{ route('tasks.finish', $task->id) }}" method="post">
+        @csrf
+        @method('PUT')
+        <x-bladewind::modal size="large" title="Check Confirmation" name="check-modal"
+            ok_button_action="this.closest('form').submit()">
+            Do you really want mark your task as finished?
+        </x-bladewind::modal>
+    </form>
+
+    <form action="{{ route('tasks.destroy', $task->id) }}" method="post" title="Delete the task">
+        @csrf
+        @method('DELETE')
+        <x-bladewind::modal size="large" title="Delete Confirmation" name="delete-modal"
+            ok_button_action="this.closest('form').submit()">
+            Do you really want to delete your task?
+        </x-bladewind::modal>
+    </form>
+
+@endsection
