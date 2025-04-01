@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -133,7 +134,7 @@ class TaskController extends Controller
         $affected = DB::table('tasks')
             ->where('id', '=', $id)
             ->where('user_id', '=', $userId)
-            ->update(['finished' => true]);
+            ->update(['finished' => true, 'finished_at' => Carbon::now()]);
 
         if ($affected === 0) {
             return redirect()->route('tasks.index');
