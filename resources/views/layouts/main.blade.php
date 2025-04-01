@@ -52,7 +52,7 @@
                     <x-slot:trigger>
                         <div class="flex space-x-1 items-center rounded-md">
                             <div class="grow">
-                                <x-bladewind::avatar label="{{ Auth::user()->name[0] }}" size="small" />
+                                <x-bladewind::avatar label="{{ strtoupper(Auth::user()->name[0]) }}" size="small" />
                             </div>
                             <div>
                                 <x-bladewind::icon name="chevron-down" class="!h-4 !w-4" />
@@ -80,7 +80,7 @@
 
                     <x-bladewind::dropmenu-item divider />
 
-                    <a href="{{ route('tasks.index') }}" target="_self">
+                    <a href="{{ route('users.edit') }}" target="_self">
                         <x-bladewind::dropmenu-item icon="pencil-square">
                             Edit Profile
                         </x-bladewind::dropmenu-item>
@@ -192,3 +192,4 @@
 </body>
 
 </html>
+
