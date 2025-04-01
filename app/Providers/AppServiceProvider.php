@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\View\Components\Forms\DateFilter;
 use App\View\Components\Forms\EditPassword;
 use App\View\Components\Forms\EditProfile;
 use Illuminate\Support\Facades\Blade;
@@ -22,7 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // User
         Blade::component('edit-profile-form', EditProfile::class);
         Blade::component('edit-password-form', EditPassword::class);
+
+        // Dashboard
+        Blade::component('date-filter-form', DateFilter::class);
     }
 }

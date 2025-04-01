@@ -30,22 +30,22 @@ Route::middleware('auth')
         Route::delete('/delete/{id}', 'destroy')->name('tasks.destroy');
     });
 
-// Dashboard
-Route::middleware('auth')
-    ->controller(DashboardController::class)
-    ->group(function () {
-        Route::get('/dashboard', 'index')->name('dashboard.index');
-    });
-
 // Users
 Route::middleware('auth')
     ->controller(UserController::class)
     ->group(function () {
-        Route::get('/edit-profile', 'edit')->name('users.edit');
+        Route::get('/edit', 'edit')->name('users.edit');
         Route::put('/update-profile', 'updateProfile')->name(
             'users.update.profile',
         );
         Route::put('/update-password', 'updatePassword')->name(
             'users.update.password',
         );
+    });
+
+// Dashboard
+Route::middleware('auth')
+    ->controller(DashboardController::class)
+    ->group(function () {
+        Route::get('/dashboard', 'index')->name('dashboard.index');
     });

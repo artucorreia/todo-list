@@ -4,11 +4,13 @@
 
 @section('content')
 
-<h1>
-    Dashboard
-</h1>
-<div>
-    some data here
-</div>
+    <x-date-filter-form></x-date-filter-form>
+
+    <h1>
+        Dashboard
+    </h1>
+    <div>
+        some data here
+    </div>
 
 @endsection
