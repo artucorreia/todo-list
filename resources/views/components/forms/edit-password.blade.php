@@ -24,7 +24,7 @@
 
             <div class="flex justify-end gap-2">
 
-                <button type="submit" class="px-12 py-2 !bg-blue-600 text-white rounded-md">Save</button>
+                <button type="submit" class="px-12 py-2 bg-blue-500 text-white rounded-md">Save</button>
             </div>
         </form>
     </div>

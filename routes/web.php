@@ -48,4 +48,8 @@ Route::middleware('auth')
     ->controller(DashboardController::class)
     ->group(function () {
         Route::get('/dashboard', 'index')->name('dashboard.index');
+        Route::get(
+            '/tasks-by-priority-data',
+            'findTasksQuantityByPriorityChart',
+        )->name('dashboard.data');
     });

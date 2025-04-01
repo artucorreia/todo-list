@@ -11,7 +11,7 @@
     </a>
 
     <div class="background_image min-h-180 py-15">
-        <div class="w-170 mx-auto max-md:w-full">
+        <div class="w-120 mx-auto max-md:w-full">
             <x-bladewind::tab-group name="tab-icon">
                 <x-slot name="headings">
                     <x-bladewind::tab-heading name="icon-blue" active="false" icon="user" label="Edit Profile"
@@ -32,3 +32,4 @@
     </div>
 
 @endsection
+
