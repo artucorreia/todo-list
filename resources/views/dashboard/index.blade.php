@@ -5,6 +5,8 @@
 @section('content')
     <link rel="stylesheet" href="/css/background/bg.css">
 
+    <x-arrow-back-page title="Go back to home page" />
+
     <div class="min-h-screen bg-gradient-to-b from-gray-100 to-gray-300 flex flex-col items-center p-6 background_image">
         <!-- <x-date-filter-form></x-date-filter-form> -->
 

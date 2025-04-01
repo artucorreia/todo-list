@@ -5,10 +5,8 @@
 @section('content')
 
     <link rel="stylesheet" href="/css/background/bg.css">
-    <a href="{{ route('tasks.index') }}" title="Go back to home"
-        class="bg-blue-500 size-10 absolute mt-2 ml-2 rounded-full flex justify-center items-center hover:cursor-pointer">
-        <x-carbon-arrow-left class="size-7 text-white" />
-    </a>
+
+    <x-arrow-back-page title="Go back to home page" />
 
     <div class="background_image min-h-180 py-15">
         <div class="w-120 mx-auto max-md:w-full">

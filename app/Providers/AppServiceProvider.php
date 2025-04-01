@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\View\Components\Forms\DateFilter;
 use App\View\Components\Forms\EditPassword;
 use App\View\Components\Forms\EditProfile;
+use App\View\Components\Util\ArrowBackPage;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,5 +30,8 @@ class AppServiceProvider extends ServiceProvider
 
         // Dashboard
         Blade::component('date-filter-form', DateFilter::class);
+
+        // Util
+        Blade::component('arrow-back-page', ArrowBackPage::class);
     }
 }

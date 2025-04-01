@@ -9,10 +9,7 @@
     <!-- Animations -->
     <link rel="stylesheet" href="/css/animations/animation.css">
 
-    <a href="{{ route('tasks.show', $task->id) }}" title="Go back to task page"
-        class="bg-blue-500 size-10 absolute mt-2 ml-2 rounded-full flex justify-center items-center hover:cursor-pointer">
-        <x-carbon-arrow-left class="size-7 text-white" />
-    </a>
+    <x-arrow-back-page route="tasks.show" :routeParam="['id' => $task->id]" title="Go back to task page" />
 
     <div class="py-15 flex flex-col justify-center items-center background_image">
         <h1 class="text-3xl font-semibold font-[Roboto_Mono] pb-3">Edit Your Task</h1>
